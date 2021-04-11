@@ -22,10 +22,15 @@ classifiers= [
 
 [tool.poetry.dependencies]
 python = "^3.6.2"
-manim = ">=0.3"
+manim = ">=0.5"
+ipython = {version = "^7.22.0", python = ">=3.7,<4.0.0"}
+pyreadline = {version = "^2.1", platform = "win32"}
 
 [tool.poetry.plugins."manim.plugins"]
-"manim_plugintemplate" = "manim_plugintemplate"
+"manim_livestream" = "manim_livestream"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
