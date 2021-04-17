@@ -143,8 +143,9 @@ def stream():
 
     Example
     -------
-
-    >>> from manim import stream, Circle, ShowCreation
+    
+    >>> from manim_livestream import stream
+    >>> from manim Circle, ShowCreation
     >>> manim = stream()
     >>> circ = Circle()
     >>> manim.play(ShowCreation(circ))

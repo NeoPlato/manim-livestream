@@ -25,16 +25,16 @@ class StreamFileWriter(SceneFileWriter):
 
     def __init__(self, renderer):
         super().__init__(renderer, "")
-        self.sdp_path = os.path.join(config.media_dir, streaming_config.sdp_name)
+        self.sdp_path = os.path.join(config.get_dir("media_dir"), streaming_config.sdp_name)
 
     def init_output_directories(self, scene_name):
         """Overridden to avoid creation of unnecessary output directories."""
-        # pass
-        self._partial_movie_directory = tempfile.TemporaryDirectory(dir=config.media_dir)
+        guarantee_existence(config.get_dir("media_dir"))
+        self._partial_movie_directory = tempfile.TemporaryDirectory(dir=config.get_dir("media_dir"))
 
     def _refresh_partial_movie_directory(self):
         self._partial_movie_directory.cleanup()
-        self._partial_movie_directory = tempfile.TemporaryDirectory(dir=config.media_dir)
+        self._partial_movie_directory = tempfile.TemporaryDirectory(dir=config.get_dir("media_dir"))
 
     @property
     def partial_movie_directory(self):

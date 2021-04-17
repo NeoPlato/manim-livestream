@@ -41,7 +41,7 @@ def parse_livestream_args(args: list):
         "--config_file",
         help="Specify the configuration file"
     )
-    return parser.parse_args(args[1:])
+    return parser.parse_args(args)
 
 
 def disable_logging(func):

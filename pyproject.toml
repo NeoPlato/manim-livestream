@@ -5,7 +5,7 @@ description = "A template project to both illustrate and serve as an example for
 license = "MIT"
 authors = ["The Manim Community Developers"]
 readme = "README.md"
-repository = "https://github.com/ManimCommunity/manim-plugintemplate"
+repository = "https://github.com/NeoPlato/manim-manim_livestream"
 documentation="https://docs.manim.community/en/latest/installation/plugins.html"
 classifiers= [
     "Development Status :: 4 - Beta",
