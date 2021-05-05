@@ -1,12 +1,6 @@
 # Manim Livestream
 
-This plugin is designed to emable livestreaming support for [Manim](https://www.manim.community/). One
-can easily open a terminal and type in:
-
-``` {.sourceCode .bash}
-python -m manim_livestream
-```
-
+This plugin is designed to emable livestreaming support for [Manim](https://www.manim.community/). 
 ## Installation
 
 Works like other packages, so pip will do fine
