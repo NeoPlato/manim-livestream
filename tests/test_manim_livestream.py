@@ -3,9 +3,9 @@ import os
 from manim._config import config
 import pytest 
 
-from src.manim_livestream import __version__
-from src.manim_livestream.stream_starter import guarantee_sdp_file
-from src.manim_livestream.utils import streaming_config
+from manim_livestream import __version__
+from manim_livestream.stream_starter import guarantee_sdp_file
+from manim_livestream.utils import streaming_config
 
 
 def test_version():

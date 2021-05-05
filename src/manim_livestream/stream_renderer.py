@@ -5,7 +5,7 @@ from .stream_file_writer import StreamFileWriter
 
 class StreamCairoRenderer(CairoRenderer):
     def init_scene(self, scene):
-        """For compatibility with the __init__ from scene that's not being
-        directly overridden
+        """For compatibility with the __init__ from :class:`~.Scene` that's not 
+        being directly overridden
         """
-        self.file_writer = StreamFileWriter(self)
+        self.file_writer = StreamFileWriter(self, "")

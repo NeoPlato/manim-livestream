@@ -1,4 +1,4 @@
-from manim._config import config
+from manim import config
 from manim.mobject.frame import FullScreenRectangle as Frame
 from manim.scene.scene import Scene
 from manim.utils.simple_functions import get_parameters
