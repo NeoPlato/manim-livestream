@@ -11,7 +11,7 @@ from .config import streaming_config
 from .config.logger_utils import disable_logging
 from .utils import open_client, popup_window, guarantee_sdp_file
 
-__all__ = ["livestream", "stream", "open_client"]
+__all__ = ["livestream", "stream", "play_scene"]
 
 
 INFO = """

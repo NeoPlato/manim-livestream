@@ -38,7 +38,7 @@ def open_client(client=None):
         "-reorder_queue_size",
         "0",
     ]
-    return subprocess.Popen(command)
+    subprocess.Popen(command)
 
 
 @disable_logging

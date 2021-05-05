@@ -1,6 +1,6 @@
 # Manim Livestream
 
-This plugin is designed to emable livestreaming support for [Manim](https://www.manim.community/). 
+This plugin is designed to enable livestreaming support for [Manim](https://www.manim.community/). 
 ## Installation
 
 Works like other packages, so pip will do fine
@@ -86,7 +86,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 - You want scenes present in files? Here you go:
 
 ```bash
-python -m manim_livestream example_scenes\basic.py
+python -m manim_livestream example_scenes/basic.py
 Manim Community v0.6.0
 
 1: OpeningManim
@@ -102,6 +102,17 @@ Choice(s): 2
 ```
 
 This particular one will render the scene and send the frames to the streaming protocol.
+
+## Potential problems
+- Last 2 or 3 frames don't get sent
+  Close the window and restart it with `open_client()`
+- The entire thing freezes
+  Close the window and restart it with `open_client()`
+- Using any other streaming protocol
+  As of yet, not a great plan. From experimentation rtp seems the most stable. However the
+  streaming port shouldn't be too hard to modify.
+  
+
 
 ## License and contribution
 The code is released as Free Software under the [GNU/GPLv3](https://choosealicense.com/licenses/gpl-3.0/) license. 
