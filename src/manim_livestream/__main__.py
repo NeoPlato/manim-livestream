@@ -1,21 +1,26 @@
+from pathlib import Path
+
 import click
 import cloup
 from click_default_group import DefaultGroup
-from manim import config
+from manim import config, console
 from manim.cli.render.ease_of_access_options import ease_of_access_options
 from manim.cli.render.global_options import global_options
 from manim.cli.render.output_options import output_options
 from manim.cli.render.render_options import render_options
+from manim.utils.module_ops import scene_classes_from_file
 
-from . import __version__
 from .cli import streaming_options
 from .config import get_streaming_configurations
-from .stream_starter import livestream
+from .stream_starter import livestream, play_scene
+from .streaming_scene import get_streamer
 
 
 @cloup.command(
     context_settings={"help_option_names": ["-h", "--help"]},
 )
+@click.argument("file", type=Path, required=False, default="-")
+@click.argument("scene_names", required=False, nargs=-1)
 @streaming_options
 @global_options
 @output_options
@@ -28,8 +33,7 @@ def main(**args):
             exec("self.use_ipython = {}".format(parser["CLI"]["use_ipython"]))
             for name in args:
                 setattr(self, name, args[name])
-            self.file = "-"
-            self.scene_names = None
+            # self.scene_names = None
 
         def _get_kwargs(self):
             return list(self.__dict__.items())
@@ -48,23 +52,16 @@ def main(**args):
     click_args = ClickArgs(args)
     config.digest_args(click_args)
 
-    livestream(click_args.use_ipython)
-    return args
-
-
-# @click.group(
-#     cls=DefaultGroup,
-#     default="start",
-#     no_args_is_help=True,
-#     help="Begin livestreaming",
-#     # epilog=EPILOG,
-# )
-# @click.pass_context
-# def main(ctx):
-#     """The entry point for manim-livestream."""
-#     pass
-
-# main.add_command(start)
+    file = args["file"]
+    if str(file) == "-":
+        livestream(click_args.use_ipython)
+    else:
+        for SceneClass in scene_classes_from_file(file):
+            try:
+                scene = get_streamer(SceneClass)
+                play_scene(scene)
+            except Exception:
+                console.print_exception()
 
 if __name__ == '__main__':
     main()

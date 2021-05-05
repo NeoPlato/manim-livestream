@@ -5,7 +5,7 @@ import readline
 import rlcompleter
 
 from manim._config import config, console, logger
-from .streaming_scene import get_streamer, play_scene
+from .streaming_scene import get_streamer
 
 from .config import streaming_config
 from .config.logger_utils import disable_logging
@@ -26,12 +26,6 @@ original Scene class. To create a streaming class which inherits from
 another scene class, e.g. MovingCameraScene, create it with the syntax:[/green]
 
 [cyan]>>> self2 = get_streamer(MovingCameraScene)[/cyan]
-
-[green]Want to render the animation of an entire pre-baked scene? Here's an example:[/green]
-
-[cyan]>>> from example_scenes import basic[/cyan]
-[cyan]>>> play_scene(basic.WarpSquare)[/cyan]
-[cyan]>>> play_scene(basic.OpeningManimExample, start=0, end=5)[/cyan]
 
 [green]To view an image of the current state of the scene or mobject, use:[/green]
 
@@ -85,6 +79,25 @@ def livestream(use_ipython):
 
     console.print(INFO)
     shell.interact(banner="", exitmsg="")
+
+
+def play_scene(scene):
+    """Play a scene using the livestreaming configuration
+
+    Parameters
+    ----------
+    scene
+        The scene to be played.
+    """
+    logger.debug("Ensuring sdp file exists: Running Wait() animation")
+    guarantee_sdp_file()
+
+    open_client()
+
+    logger.debug("Triggering streaming client window: Running Wait() animation")
+    popup_window(delay=2)
+
+    scene.render()
 
 
 def stream():

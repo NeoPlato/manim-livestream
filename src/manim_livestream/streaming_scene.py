@@ -5,7 +5,7 @@ from manim.utils.simple_functions import get_parameters
 
 from .stream_renderer import StreamCairoRenderer
 
-__all__ = ["get_streamer", "play_scene"]
+__all__ = ["get_streamer"]
 
 
 class Stream:
@@ -68,6 +68,27 @@ class Stream:
         self.renderer.update_frame(self, ignore_skipping=True)
         self.renderer.camera.get_image().show()
 
+    def render(self, preview=False):
+        """
+        Renders this Scene.
+
+        Parameters
+        ---------
+        preview : bool
+            If true, opens scene in a file viewer.
+        """
+        self.setup()
+        try:
+            self.construct()
+        except EndSceneEarlyException:
+            pass
+        except RerunSceneException as e:
+            self.remove(*self.mobjects)
+            self.renderer.clear_screen()
+            self.renderer.num_plays = 0
+            return True
+        self.tear_down()
+
 
 def get_streamer(*scene):
     """
@@ -88,40 +109,3 @@ def get_streamer(*scene):
     # This class doesn't really need a name, but we can go
     # generic for this one
     return cls()
-
-
-def play_scene(scene, start=None, end=None):
-    """Every scene has a render method that runs its setup and construct methods.
-    Using a streamer from classes with detailed implementation of this may call for
-    use of this.
-
-    >>> from example_scenes.basic import OpeningManimExample  # doctest: +SKIP
-    >>> manim = get_streamer(OpeningManimExample)             # doctest: +SKIP
-    >>> manim.render()                                        # doctest: +SKIP
-
-    This should stream a complete rendering of the Scene to the URL specified.
-    Hence the function clears everything after it's finished for more use. Or
-    something like that.
-
-    Parameters
-    ----------
-    scene
-        The scene to be played.
-    start
-        The animation to start with. Default original start point.
-    end
-        The animation to end with. Default original endpoint
-
-    .. note::
-        The animations use endpoint-inclusive indexing, meaning (0, 5) would
-        play 0 upto 5 inclusive of both.
-    """
-    import math
-    manim = get_streamer(scene)
-    config.from_animation_number = start or 0
-    config.upto_animation_number = end or math.inf
-    manim.render()
-    # Need to put it back because an end point less than the number of animations
-    # in a streamer makes any others ignored. That's a bug
-    config.from_animation_number, config.upto_animation_number = 0, math.inf
-    manim.clear()
