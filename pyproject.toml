@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "manim-PluginTemplate"
-version = "0.1.5"
-description = "A template project to both illustrate and serve as an example for plugin creations on top of the manim (community edition) engine."
+name = "manim-livestream"
+version = "0.0.1"
+description = "Package that implements livestreaming configurations for Manim."
 license = "MIT"
-authors = ["The Manim Community Developers"]
+authors = ["NeoPlato"]
 readme = "README.md"
-repository = "https://github.com/ManimCommunity/manim-plugintemplate"
+repository = "https://github.com/NeoPlato/manim-manim_livestream"
 documentation="https://docs.manim.community/en/latest/installation/plugins.html"
 classifiers= [
     "Development Status :: 4 - Beta",
@@ -22,10 +22,15 @@ classifiers= [
 
 [tool.poetry.dependencies]
 python = "^3.6.2"
-manim = ">=0.3"
+manim = ">=0.6"
+ipython = {version = "^7.22.0", python = ">=3.7,<4.0.0"}
+pyreadline = {version = "^2.1", platform = "win32"}
 
 [tool.poetry.plugins."manim.plugins"]
-"manim_plugintemplate" = "manim_plugintemplate"
+"manim_livestream" = "manim_livestream"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -1,173 +1,120 @@
-# Plugin Template
+# Manim Livestream
 
-Plugins are features that extend Manim's core functionality. This is a
-template project that demonstrates how you can create and upload a manim
-plugin to PyPI using a PEP 517 compliant build system,
-[Poetry](https://python-poetry.org).
+This plugin is designed to enable livestreaming support for [Manim](https://www.manim.community/). 
+## Installation
 
-Poetry is **NOT** required to create plugins, but is recommended because
-it provides build isolation and ensures users can reliably install your
-plugin without falling into dependency hell. You may use another build
-system (e.g. Flit, Setuptools, Pipenv, etc...) if you wish.
-
-## Creating Plugins
-
-The only requirement of your preferred build system is that it specifies
-the `manim.plugins` [entry
-point](https://packaging.python.org/specifications/entry-points/).
-
-> **note**
->
-> The plugin naming convention is to add the prefix `manim-`. This
-> allows users to easily search for plugins on organizations like PyPi,
-> but it is not required.
-
-### Installing Poetry
-
-Poetry can be installed on Windows, MacOS and Linux. Please visit the
-official poetry website for [installation
-instructions](https://python-poetry.org/docs/#installation). You may
-want to see the official documentation for a list of all [available
-commands](https://python-poetry.org/docs/cli/).
-
-### Setting Up Your Plugin Directory Structure
-
-To create a Python project suitable for poetry, run:
+Works like other packages, so pip will do fine
 
 ``` {.sourceCode .bash}
-poetry new --src manim-YourPluginName 
+pip install manim-livestream
 ```
 
-> **note**
->
-> `--src` is both optional and recomended in order to create a src
-> directory where all of your plugin code should live.
 
-This will create the following project structure: :
+## Usage
 
-    manim-YourPluginName
-    ├── pyproject.toml
-    ├── README.rst
-    ├── src
-    │   └── manim_yourpluginname
-    │       └── __init__.py
-    └── tests
-        ├── __init__.py
-        └── test_manim_yourpluginname.py 
+- Run the following command:
 
-If you have already extended manim's functionality, you can instead run:
-
-``` {.sourceCode .bash}
-cd path/to/plugin
-poetry init
+```bash
+python -m manim_livestream
 ```
 
-This will prompt you for basic information regarding your plugin and
-help create and populate a `pyproject.toml` similar to the one in this
-template; however, you may wish to update your project directory
-structure similarly.
+This loads a python shell along with the usage information:
 
-See the official documentation for more information on the [init
-command](https://python-poetry.org/docs/cli/#init).
+```bash
+Manim is now running in streaming mode. Stream animations by passing
+them to self.play(), e.g.
 
-From now on, when working on your plugin, ensure you are using the
-virtual environment by running the following at the root of your
-project:
+>>> c = Circle()
+>>> self.play(ShowCreation(c))
 
-``` {.sourceCode .bash}
-poetry shell 
+The current streaming class under the name `manim` inherits from the
+original Scene class. To create a streaming class which inherits from
+another scene class, e.g. MovingCameraScene, create it with the syntax:
+
+>>> self2 = get_streamer(MovingCameraScene)
+
+To view an image of the current state of the scene or mobject, use:
+
+>>> self.show_frame()        # view image of current scene
+>>> c = Circle()
+>>> c.show()                 # view image of Mobject
+
+>>> 
 ```
 
-### Updating Pyproject.toml
+- Config parameters in the command line carry over to manim's internal framework.
+For example:
 
-The `pyproject.toml` file is used by Poetry and other build systems to
-manage and configure your project. Manim uses the package's entry point
-metadata to discover available plugins. The entry point group,
-`"manim.plugins"`, is **REQUIRED** and can be [specified as
-follows](https://python-poetry.org/docs/pyproject/#plugins):
+```bash
+python -m manim_livestream -v WARNING
 
-``` {.sourceCode .toml}
-[tool.poetry.plugins."manim.plugins"]
-"manim_yourpluginname" = "module:object.attr"
+...INFO...
+
+>>> config.verbosity
+'WARNING'
+>>>
 ```
 
-> **note**
->
-> The left hand side represents the entry point name which should be
-> unique among other plugin names. This is the internal name Manim will
-> use to identify and handle plugins.
->
-> The right hand side should reference a python object (i.e. module,
-> class, function, method, etc...) and will be the first code run in
-> your plugin. In the case of this template repository, the package name
-> is used which Python interprets as the package's `__init__.py` module.
->
-> See the python packaging
-> [documentation](https://packaging.python.org/specifications/entry-points/)
-> for more information on entry points.
+- IPython is an option:
 
-### Testing Your Plugin Locally
+```bash
+python -m manim_livestream --use-ipython
 
+...INFO...
 
-``` {.sourceCode .bash}
-poetry install
+Python 3.9.2 (tags/v3.9.2:1a79785, Feb 19 2021, 13:44:55) [MSC v.1928 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.23.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]:
+
 ```
 
-This command will read the `pyproject.toml`, install the dependencies of
-your plugin, and create a `poetry.lock` file to ensure everyone using
-your plugin gets the same version of dependencies. It is important that
-your dependencies are properly annotated with a version constraint (e.g.
-`manim:^0.1.1`, `numpy:*`, etc...). Equally important to the
-dependencies specified here is that they do not directly conflict with
-[Manim's](https://github.com/ManimCommunity/manim/blob/master/pyproject.toml).
-If you want to update the dependencies specified in `pyproject.toml`,
-use:
+- Simple ways exist for simpler actions:
 
-``` {.sourceCode .bash}
-poetry update
+```py
+Python 3.9.2 (tags/v3.9.2:1a79785, Feb 19 2021, 13:44:55) [MSC v.1928 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+
+>>> from manim_livestream import stream
+>>> from manim import Circle, ShowCreation
+>>> self = stream()
+>>> circ = Circle()
+>>> self.play(ShowCreation(circ))
 ```
 
-See the official documentation for more information on
-[versioning](https://python-poetry.org/docs/dependency-specification/)
-or the [install command](https://python-poetry.org/docs/cli/#install).
+- You want scenes present in files? Here you go:
 
-Poetry allows for dependencies that are strictly for project developers.
-These are not installed by users. To add them to your project, update
-the `pyproject.toml` file with the section followed by the dependencies:
+```bash
+python -m manim_livestream example_scenes/basic.py
+Manim Community v0.6.0
 
-``` {.sourceCode .toml}
-[tool.poetry.dev-dependencies]
-pytest = "*"
-pylint = "*"
+1: OpeningManim
+2: SquareToCircle
+3: UpdatersExample
+4: WarpSquare
+5: WriteStuff
+
+Choose number corresponding to desired scene/arguments.
+(Use comma separated list for multiple entries)
+Choice(s): 2
+
 ```
 
-The `pytest` package is a functional testing framework which you can use
-to run the test within the `manim-YourPluginName/tests` directory. You
-should create files which test the behavior and functionality of your
-plugin here. Test first development is a good practice to ensure your
-code behaves as intended before packaging and shipping your code
-publicly. Additionally, you can create Manimations that depend on your
-plugin which is another great way to ensure functionality.
+This particular one will render the scene and send the frames to the streaming protocol.
 
-### Uploading Your Project
-
-
-By default, poetry is set to register the package/plugin to PyPI. You'll
-need to register an account there to upload/update your plugin. As soon
-as your plugin is useful locally, run the following:
-
-``` {.sourceCode .bash}
-poetry publish --build
-```
-
-Your project should now be available on PyPI for users to install via
-`pip install manim-YourPluginName` and usable within their respective
-environments.
-
-See the official documentation for more information on the [publish
-command](https://python-poetry.org/docs/cli/#publish).
-
-## Code of Conduct
+## Potential problems
+- Last 2 or 3 frames don't get sent
+  Close the window and restart it with `open_client()`
+- The entire thing freezes
+  Close the window and restart it with `open_client()`
+- Using any other streaming protocol
+  As of yet, not a great plan. From experimentation rtp seems the most stable. However the
+  streaming port shouldn't be too hard to modify.
+  
 
 
-Our full code of conduct, and how we enforce it, can be read on [our website](https://docs.manim.community/en/latest/conduct.html).
+## License and contribution
+The code is released as Free Software under the [GNU/GPLv3](https://choosealicense.com/licenses/gpl-3.0/) license. 
+Copying, adapting and republishing it is not only consent but also encouraged, particularly surrounding the subject of tests for the framework.
+
