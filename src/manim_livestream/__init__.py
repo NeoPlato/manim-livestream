@@ -1,4 +1,4 @@
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __all__ = ["get_streamer", "livestream", "open_client", "play_scene", "stream"]
 
 from .stream_starter import *

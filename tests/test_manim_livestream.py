@@ -9,7 +9,7 @@ from manim_livestream.utils import streaming_config
 
 
 def test_version():
-    assert __version__ == "0.0.1"
+    assert __version__ == "0.0.2"
 
 
 @pytest.mark.parametrize(
