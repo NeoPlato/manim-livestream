@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "manim-livestream"
-version = "0.0.1"
+version = "0.0.2"
 description = "Package that implements livestreaming configurations for Manim."
 license = "MIT"
 authors = ["NeoPlato"]
