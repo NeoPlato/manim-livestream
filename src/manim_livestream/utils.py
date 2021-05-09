@@ -22,11 +22,11 @@ def open_client(client=None):
         streaming_config.sdp_name
     )
     command = [
-        streaming_config.streaming_client,
+        streaming_config.client,
         "-x",
         "1280",
         "-y",
-        "360",  # For a resizeable window
+        "360",            # For a resizeable window
         "-window_title",  # Name of the window
         "Livestream",
         "-loglevel",

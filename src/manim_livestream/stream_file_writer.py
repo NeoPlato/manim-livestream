@@ -5,7 +5,7 @@ from pathlib import Path
 from manim import __version__
 from manim._config import config, logger
 from manim.constants import FFMPEG_BIN
-from manim.scene.scene_file_writer import SceneFileWriter\
+from manim.scene.scene_file_writer import SceneFileWriter
 
 from .config import streaming_config
 
@@ -33,7 +33,7 @@ class StreamFileWriter(SceneFileWriter):
         """
         logger.info(
             "Houston, we are ready to launch. Sending over to %(url)s",
-            {"url": {streaming_config.streaming_url}},
+            {"url": {streaming_config.url}},
         )
 
         fps = config["frame_rate"]
@@ -73,12 +73,12 @@ class StreamFileWriter(SceneFileWriter):
             command += ["-vcodec", "qtrle"]
         else:
             command += ["-vcodec", "libx264", "-pix_fmt", "yuv420p"]
-        if streaming_config.streaming_protocol == "rtp":
+        if streaming_config.protocol == "rtp":
             command += ["-sdp_file", sdp_path]
         command += [
             "-f",
-            streaming_config.streaming_protocol,  # Take a look here for other streaming protocols
-            streaming_config.streaming_url,
+            "rtp",
+            streaming_config.url,
         ]
         self.writing_process = subprocess.Popen(command, stdin=subprocess.PIPE)
 
