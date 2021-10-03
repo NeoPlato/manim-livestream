@@ -77,10 +77,16 @@ class StreamFileWriter(SceneFileWriter):
             command += ["-sdp_file", sdp_path]
         command += [
             "-f",
-            "rtp",
+            self.get_output_format(),
             streaming_config.url,
         ]
         self.writing_process = subprocess.Popen(command, stdin=subprocess.PIPE)
+
+    def get_output_format(self):
+        if streaming_config.protocol == "rtp":
+            return "rtp"
+        if streaming_config.protocol == "udp":
+            return "mpegts"
 
     def close_movie_pipe(self):
         self.writing_process.stdin.close()
