@@ -11,7 +11,7 @@ from manim.cli.render.render_options import render_options
 from manim.utils.module_ops import scene_classes_from_file
 
 from .cli import streaming_options
-from .config import get_streaming_configurations
+from .config import get_streaming_configurations, streaming_config
 from .stream_starter import livestream, play_scene
 from .streaming_scene import get_streamer
 
@@ -28,12 +28,13 @@ from .streaming_scene import get_streamer
 @ease_of_access_options
 def main(**args):
     class ClickArgs:
-        def __init__(self, args):
+        def __init__(self):
             parser = get_streaming_configurations()
             exec("self.use_ipython = {}".format(parser["CLI"]["use_ipython"]))
             for name in args:
+                if name in streaming_config and args[name] is not None:
+                    setattr(streaming_config, name, args[name])
                 setattr(self, name, args[name])
-            # self.scene_names = None
 
         def _get_kwargs(self):
             return list(self.__dict__.items())
@@ -49,7 +50,7 @@ def main(**args):
         def __repr__(self):
             return str(self.__dict__)
 
-    click_args = ClickArgs(args)
+    click_args = ClickArgs()
     config.digest_args(click_args)
 
     file = args["file"]

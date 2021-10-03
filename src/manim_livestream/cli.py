@@ -8,14 +8,14 @@ streaming_options = option_group(
         is_flag=True,
         help="Use IPython as the interactive console",
     ),
-    # Make this option sensible and available
-    # option(
-    #     "-sp",
-    #     "--streaming_protocol",
-    #     type=click.Choice(
-    #         ["rtp", "udp"],
-    #         case_sensitive=False,
-    #     ),
-    #     help="Streaming protocol to use for livestreaming configuration",
-    # ),
+    option(
+        "--protocol",
+        help="Use a custom streaming protocol",
+        default=None
+    ),
+    option(
+        "--client",
+        help="Specify the streaming client to use",
+        default=None
+    )
 )

@@ -1,6 +1,6 @@
 from manim import config
 from manim.mobject.frame import FullScreenRectangle as Frame
-from manim.scene.scene import Scene
+from manim.scene.scene import Scene, EndSceneEarlyException, RerunSceneException
 from manim.utils.simple_functions import get_parameters
 
 from .stream_renderer import StreamCairoRenderer
@@ -106,6 +106,5 @@ def get_streamer(*scene):
     """
     bases = (Stream,) + (scene or (Scene,))
     cls = type("StreamingScene", bases, {})
-    # This class doesn't really need a name, but we can go
-    # generic for this one
+    # This class doesn't really need a name, but a generic one is permissible
     return cls()
