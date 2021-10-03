@@ -104,17 +104,20 @@ Choice(s): 2
 This particular one will render the scene and send the frames to the streaming protocol.
 
 ## Potential problems
-- Last 2 or 3 frames don't get sent
+- Last 2 or 3 frames don't get sent?
   Close the window and restart it with `open_client()`
-- The entire thing freezes
+- The entire thing freezes?
   Close the window and restart it with `open_client()`
-- Using any other streaming protocol
+- Using any other streaming protocol?
   As of yet, not a great plan. From experimentation rtp seems the most stable. However the
   streaming port shouldn't be too hard to modify.
   
 
-
 ## License and contribution
 The code is released as Free Software under the [GNU/GPLv3](https://choosealicense.com/licenses/gpl-3.0/) license. 
 Copying, adapting and republishing it is not only consent but also encouraged, particularly surrounding the subject of tests for the framework.
+
+## Addendum
+As long as the way Manim interprets scene compilation remains static, this library can easily be
+used with any `manim>=0.6.0`_(as far as I know)_.
 
