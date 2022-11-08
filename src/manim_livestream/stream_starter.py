@@ -1,14 +1,11 @@
 import code
-import os
-from pathlib import Path
 import readline
 import rlcompleter
 
-from manim._config import config, console, logger
+from manim._config import console, logger
 from .streaming_scene import get_streamer
 
 from .config import streaming_config
-from .config.logger_utils import disable_logging
 from .utils import open_client, popup_window, guarantee_sdp_file
 
 __all__ = ["livestream", "stream", "play_scene"]

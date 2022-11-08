@@ -4,10 +4,11 @@ from pathlib import Path
 
 from manim import __version__
 from manim._config import config, logger
-from manim.constants import FFMPEG_BIN
 from manim.scene.scene_file_writer import SceneFileWriter
 
 from .config import streaming_config
+
+FFMPEG_BIN = "ffmpeg"
 
 
 class StreamFileWriter(SceneFileWriter):
